@@ -27,6 +27,6 @@
 }
 
 .Invalid {
-    border: 1px solid red;
-    background-color: #fda49a;
+    border: 2px solid red;
+    padding: 6px 10px;
 }

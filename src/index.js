@@ -5,13 +5,22 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from 'redux'; // applyMiddleware and compose are required for redux-thunk
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux'; // applyMiddleware and compose are required for redux-thunk
+
+// import reducers
+import orderReducer from "./store/reducers/order";
 import burgerBuilderReducer from "./store/reducers/burgerBuilder";
+
 import thunk from "redux-thunk"; // for async code in reducers
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(burgerBuilderReducer, composeEnhancers(
+const rootReducer = combineReducers({
+    burgerBuilder: burgerBuilderReducer,
+    order: orderReducer
+})
+
+const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ))
 
