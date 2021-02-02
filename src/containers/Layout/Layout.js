@@ -10,6 +10,9 @@ import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
 // import css
 import classes from "./Layout.css"
 
+// connect Reudx
+import { connect } from "react-redux";
+
 
 class Layout extends Component{
 
@@ -30,8 +33,8 @@ class Layout extends Component{
     render() {
         return (
         <Aux>
-            <Toolbar openSideDrawer={this.sideDrawerOpenHandler} />
-            <SideDrawer open={this.state.showSideDrawer} closed={this.sideDrawerCloseHandler} />
+            <Toolbar isAuth={this.props.isAuthnticated} openSideDrawer={this.sideDrawerOpenHandler} />
+            <SideDrawer isAuth={this.props.isAuthnticated}  open={this.state.showSideDrawer} closed={this.sideDrawerCloseHandler} />
             <main className={classes.Content}>
                 {this.props.children}
             </main>
@@ -39,4 +42,10 @@ class Layout extends Component{
     )
 }}
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        isAuthnticated: state.auth.token !== null
+    };
+};
+
+export default connect(mapStateToProps)(Layout);
