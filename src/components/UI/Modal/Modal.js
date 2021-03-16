@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 // import hoc components
 import Aux from "../../../hoc/Aux/Aux"
@@ -7,33 +7,22 @@ import Backdrop from "../Backdrop/Backdrop";
 //import css
 import classes from "./Modal.css"
 
-class Modal extends Component {
+const modal = (props) => {
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.show !== this.props.show || nextProps.children !== this.props.children) {
-            return true; // it means, if user change prop show, which means he want to see Modal, only in this case we update this component and his childs (performance improver)
-        } else {
-            return false
-        }
-    } // I can just write return nextProps.show !== this.props.show; (less rows)
+    return (
+        <Aux>
+            <Backdrop  show={props.show} clicked={props.hideModal} />  
+                <div className={classes.Modal} style={{transform:props.show ? "translateY(0)" : "translateY(-100vw)", opacity: props.show ? "1" : "0"}}>
+            { props.children }
+            </div>
+        </Aux>
 
+    )
     
-
-    componentDidUpdate() {
-        console.log("modal updating")
-    }
-
-    render() {
-        return (
-            <Aux>
-                <Backdrop  show={this.props.show} clicked={this.props.hideModal} />  
-                 <div className={classes.Modal} style={{transform:this.props.show ? "translateY(0)" : "translateY(-100vw)", opacity: this.props.show ? "1" : "0"}}>
-                { this.props.children }
-                </div>
-            </Aux>
-    
-        )
-    }
 }
 
-export default Modal;
+
+export default React.memo(modal,
+    (prevProps, nextProps) => nextProps === prevProps.show && nextProps.children === prevProps.children);
+
+// it means, if user change prop show, which means he want to see Modal, only in this case we update this component and his childs (performance improver)

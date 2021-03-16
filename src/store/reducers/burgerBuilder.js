@@ -3,7 +3,8 @@ import * as actionTypes from "../actions/actionsTypes";
 const initialState = {
     ingredients: null,
     totalPrice: 4,
-    error: false
+    error: false,
+    building: false
 };
 
 
@@ -21,7 +22,8 @@ const add_ingredient = (state, action ) => {
             ...state.ingredients,
             [action.ingredientName]: state.ingredients[action.ingredientName] + 1
         },
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        building: true
     };
 };
 
@@ -33,7 +35,8 @@ const remove_ingredient = (state, action) => {
             [action.ingredientName]:state.ingredients[action.ingredientName] - 1
 
         },
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        building: true
     };
 };
 
@@ -48,6 +51,7 @@ const set_ingredients = (state, action) => {
         },
         error: false,
         totalPrice: 4,
+        building: false
     };
 }
 

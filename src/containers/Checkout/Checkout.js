@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 
 // import redux
@@ -14,30 +14,28 @@ import ContactData from "./ContactData/ContactData";
 
 
 
-class Checkout extends Component {
+const checkout = (props) => {
 
-
-
-    checkoutContinueHandler = () => {
-        this.props.history.replace("/checkout/contact-data")
+    const checkoutContinueHandler = () => {
+        props.history.replace("/checkout/contact-data")
     }
 
-    checkoutCancelHandler = () => {
-        this.props.history.goBack();
+    const checkoutCancelHandler = () => {
+        props.history.goBack();
     }
 
-    render() {
-        let summary = <Redirect to="/" /> 
-        if (this.props.ings) {
-            const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null;
-            summary = (
-                <div>
-                    {purchasedRedirect}
-                    <CheckoutSummary onCheckoutCancelled={this.checkoutCancelHandler} onCheckoutContinue={this.checkoutContinueHandler} ingredients={this.props.ings} />
-                    <Route path={this.props.match.path + "/contact-data"} component={ContactData} /> {/* when I want send some state to child component which I render here insted component={component} I use render method like this */}
-                </div>
-            );
-        }
+ 
+    let summary = <Redirect to="/" /> 
+    if (props.ings) {
+        const purchasedRedirect = props.purchased ? <Redirect to="/" /> : null;
+        summary = (
+            <div>
+                {purchasedRedirect}
+                <CheckoutSummary onCheckoutCancelled={checkoutCancelHandler} onCheckoutContinue={checkoutContinueHandler} ingredients={props.ings} />
+                <Route path={props.match.path + "/contact-data"} component={ContactData} /> {/* when I want send some state to child component which I render here insted component={component} I use render method like this */}
+            </div>
+        );
+        
 
         return summary
     }
@@ -51,4 +49,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps)(checkout);

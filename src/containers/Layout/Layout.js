@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 // import hoc
 import Aux from "../../hoc/Aux/Aux"; //import hoc component instead wrapping code in divs
@@ -14,33 +14,30 @@ import classes from "./Layout.css"
 import { connect } from "react-redux";
 
 
-class Layout extends Component{
+const layout = (props) => {
 
-    state = {
-        showSideDrawer: false
+
+
+    const [showSideDrawer, setShowSideDrawer] = useState(false);
+
+    const sideDrawerCloseHandler = () => {
+        setShowSideDrawer(false);
     }
 
-    sideDrawerCloseHandler = () => {
-        this.setState({showSideDrawer: false})
+    const sideDrawerOpenHandler = () => {
+        setShowSideDrawer(!showSideDrawer)
     }
 
-    sideDrawerOpenHandler = () => {
-        this.setState( (prevState ) => {
-            return {showSideDrawer: !prevState.showSideDrawer} 
-        })
-    }
-
-    render() {
-        return (
-        <Aux>
-            <Toolbar isAuth={this.props.isAuthnticated} openSideDrawer={this.sideDrawerOpenHandler} />
-            <SideDrawer isAuth={this.props.isAuthnticated}  open={this.state.showSideDrawer} closed={this.sideDrawerCloseHandler} />
-            <main className={classes.Content}>
-                {this.props.children}
-            </main>
-        </Aux>
+    return (
+    <Aux>
+        <Toolbar isAuth={props.isAuthnticated} openSideDrawer={sideDrawerOpenHandler} />
+        <SideDrawer isAuth={props.isAuthnticated}  open={showSideDrawer} closed={sideDrawerCloseHandler} />
+        <main className={classes.Content}>
+            {props.children}
+        </main>
+    </Aux>
     )
-}}
+}
 
 const mapStateToProps = state => {
     return {
@@ -48,4 +45,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps)(layout);

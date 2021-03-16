@@ -11,9 +11,9 @@ import classes from "./Toolbar.css";
 const toolbar = (props) => (
     <header className={classes.Toolbar}>
         <ToogleButton clicked={props.openSideDrawer} />
-        <div><Logo height="40px" /></div>
+        <div><Logo height="40px" /></div> 
         <nav className={classes.DesktopOnly}>
-            <NavigationItems />
+            <NavigationItems isAuthenticated={props.isAuth}/>
         </nav>
     </header>
 )
